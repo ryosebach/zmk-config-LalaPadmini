@@ -163,10 +163,10 @@
             sensor-bindings = <&scroll_down_up>, <&scroll_up_down>;
 
             bindings = <
-&kp Q             &kp L         &kp U  &kp COMMA               &kp PERIOD   &kp F            &kp W                    &kp R  &mt SLASH Y                 &mt EQUAL P
-&kp E             &kp I         &kp A  &kp O                   &kp MINUS    &kp K            &kp T                    &kp N  &kp S                       &kp H
-&mt LEFT_SHIFT Z  &kp X         &kp C  &kp V                   &kp B        &kp G            &kp D                    &kp M  &kp J                       &kp B
-&kp LCTRL         &kp LEFT_ALT         &mt LEFT_COMMAND LANG2  &lt 1 SPACE  &lt 2 BACKSPACE  &mt RIGHT_COMMAND LANG1         &mt LEFT_BRACKET BACKSLASH  &mt RIGHT_BRACKET SINGLE_QUOTE
+&kp Q             &kp L         &kp U  &kp COMMA               &kp PERIOD     &kp F            &kp W                    &kp R  &mt SLASH Y                 &mt EQUAL P
+&kp E             &kp I         &kp A  &kp O                   &kp MINUS      &kp K            &kp T                    &kp N  &kp S                       &kp H
+&mt LEFT_SHIFT Z  &kp X         &kp C  &kp V                   &kp SEMICOLON  &kp G            &kp D                    &kp M  &kp J                       &kp B
+&kp LCTRL         &kp LEFT_ALT         &mt LEFT_COMMAND LANG2  &lt 1 SPACE    &lt 2 BACKSPACE  &mt RIGHT_COMMAND LANG1         &mt LEFT_BRACKET BACKSLASH  &mt RIGHT_BRACKET SINGLE_QUOTE
             >;
         };
 
