@@ -144,6 +144,16 @@
             bindings = <&kp TAB>;
             key-positions = <10 11>;
         };
+
+        COMBO_ENTER {
+            bindings = <&kp ENTER>;
+            key-positions = <35 34>;
+        };
+
+        COMBO_R_SHIFT {
+            bindings = <&kp RIGHT_SHIFT>;
+            key-positions = <29 28>;
+        };
     };
 
     macros {
@@ -209,10 +219,10 @@
         MOUSE_R_LAYER {
             display-name = "mouse_r_layer";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans       &mkp MCLK  &trans     &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &MACRO_LTAP  &mkp LCLK  &mkp RCLK  &mo 5
-&trans  &trans  &trans  &trans  &trans  &trans  &mkp MB4     &none      &mkp MB5   &trans
-&trans  &trans          &trans  &trans  &trans  &trans                  &trans     &trans
+&trans  &trans     &trans     &trans     &trans  &trans  &trans       &mkp MCLK  &trans     &trans
+&trans  &mkp RCLK  &mkp MCLK  &mkp LCLK  &trans  &trans  &MACRO_LTAP  &mkp LCLK  &mkp RCLK  &mo 5
+&trans  &mkp MB5   &trans     &mkp MB4   &trans  &trans  &mkp MB4     &none      &mkp MB5   &trans
+&trans  &trans                &trans     &trans  &trans  &trans                  &trans     &trans
             >;
         };
 
