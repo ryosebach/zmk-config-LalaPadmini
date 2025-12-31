@@ -179,10 +179,10 @@
             sensor-bindings = <&scroll_down_up>, <&scroll_up_down>;
 
             bindings = <
-&kp Q             &kp L         &kp U  &kp COMMA               &kp PERIOD     &kp F            &kp W                    &kp R  &mt2 SLASH Y                &mt2 EQUAL P
-&kp E             &kp I         &kp A  &kp O                   &kp MINUS      &kp K            &kp T                    &kp N  &kp S                       &kp H
-&mt LEFT_SHIFT Z  &kp X         &kp C  &kp V                   &kp SEMICOLON  &kp G            &kp D                    &kp M  &kp J                       &kp B
-&kp LCTRL         &kp LEFT_ALT         &mt LEFT_COMMAND LANG2  &lt 1 SPACE    &lt 2 BACKSPACE  &mt RIGHT_COMMAND LANG1         &mt LEFT_BRACKET BACKSLASH  &mt RIGHT_BRACKET SINGLE_QUOTE
+&kp Q             &kp L         &kp U  &kp COMMA               &kp PERIOD     &kp F            &kp W                    &kp R  &kp Y      &kp P
+&kp E             &kp I         &kp A  &kp O                   &kp MINUS      &kp K            &kp T                    &kp N  &kp S      &kp H
+&mt LEFT_SHIFT Z  &kp X         &kp C  &kp V                   &kp SEMICOLON  &kp G            &kp D                    &kp M  &kp J      &kp B
+&kp LCTRL         &kp LEFT_ALT         &mt LEFT_COMMAND LANG2  &lt 1 SPACE    &lt 2 BACKSPACE  &mt RIGHT_COMMAND LANG1         &kp RCTRL  &kp RIGHT_SHIFT
             >;
         };
 
@@ -191,20 +191,20 @@
             sensor-bindings = <&scroll_left_right>, <&scroll_left_right>;
 
             bindings = <
-&kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3   &kp NUMBER_4      &kp NUMBER_5       &trans  &trans  &trans  &kp SLASH         &kp KP_DIVIDE
-&kp NUMBER_6  &kp NUMBER_7  &kp NUMBER_8   &kp NUMBER_9      &kp NUMBER_0       &trans  &trans  &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
-&kp GRAVE     &kp SQT       &kp SEMICOLON  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &trans  &trans  &trans  &trans            &trans
-&trans        &trans                       &trans            &trans             &trans  &trans          &trans            &trans
+&kp NUMBER_1    &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp NUMBER_5   &trans  &trans  &trans  &kp SLASH         &kp EQUAL
+&kp NUMBER_6    &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0   &trans  &trans  &trans  &kp LEFT_BRACKET  &kp RIGHT_BRACKET
+&kp LEFT_SHIFT  &kp GRAVE     &kp TILDE     &kp SQT       &kp BACKSLASH  &trans  &trans  &trans  &trans            &trans
+&trans          &trans                      &trans        &trans         &trans  &trans          &trans            &trans
             >;
         };
 
         TERTIARY_LAYER {
             display-name = "tertiary_layer";
             bindings = <
-&kp EXCLAMATION       &kp AT_SIGN        &kp HASH      &kp DOLLAR            &kp PERCENT            &trans  &trans    &kp UP_ARROW  &trans     &trans
-&kp CARET             &kp AMPERSAND      &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans  &kp LEFT  &kp DOWN      &kp RIGHT  &trans
-&mt LEFT_SHIFT TILDE  &kp DOUBLE_QUOTES  &kp COLON     &kp LEFT_BRACE        &kp RIGHT_BRACE        &trans  &trans    &trans        &trans     &trans
-&trans                &trans                           &trans                &trans                 &trans  &trans                  &trans     &trans
+&kp EXCLAMATION  &kp AT_SIGN    &kp HASH      &kp DOLLAR            &kp PERCENT            &trans  &trans    &kp UP_ARROW  &trans     &trans
+&kp CARET        &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans  &kp LEFT  &kp DOWN      &kp RIGHT  &trans
+&kp LEFT_SHIFT   &trans         &trans        &trans                &trans                 &trans  &trans    &trans        &trans     &trans
+&trans           &trans                       &trans                &trans                 &trans  &trans                  &trans     &trans
             >;
 
             sensor-bindings = <&scroll_left_right>, <&scroll_left_right>;
