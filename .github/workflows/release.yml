@@ -1,0 +1,114 @@
+name: Publish firmware release
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Build run ID to publish (blank = latest successful master build)"
+        required: false
+        type: string
+
+jobs:
+  release:
+    name: Publish firmware to Releases
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Resolve build run
+        id: run
+        run: |
+          run_id="${{ inputs.run_id }}"
+          if [ -z "$run_id" ]; then
+            run_id=$(gh run list --workflow build.yml --branch master --status success \
+              --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+          fi
+          if [ -z "$run_id" ]; then
+            echo "::error::No successful build run found on master."
+            exit 1
+          fi
+
+          gh run view "$run_id" --json conclusion,headSha,headBranch,number,createdAt,url > run.json
+          cat run.json
+
+          conclusion=$(jq -r .conclusion run.json)
+          if [ "$conclusion" != "success" ]; then
+            echo "::error::Run $run_id did not succeed (conclusion=$conclusion)."
+            exit 1
+          fi
+
+          created_at=$(jq -r .createdAt run.json)
+          {
+            echo "id=$run_id"
+            echo "sha=$(jq -r .headSha run.json)"
+            echo "branch=$(jq -r .headBranch run.json)"
+            echo "url=$(jq -r .url run.json)"
+            echo "tag=build-$(echo "$created_at" | cut -dT -f1 | tr -d -)-$(jq -r .number run.json)"
+            echo "built_at=$created_at"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Download firmware artifact
+        run: |
+          gh run download "${{ steps.run.outputs.id }}" --name firmware --dir firmware
+          find firmware -type f | sort
+          if [ -z "$(find firmware -type f -name '*.uf2' -print -quit)" ]; then
+            echo "::error::No .uf2 files in the downloaded artifact."
+            exit 1
+          fi
+
+      - name: Publish versioned release
+        env:
+          TAG: ${{ steps.run.outputs.tag }}
+          SHA: ${{ steps.run.outputs.sha }}
+          BRANCH: ${{ steps.run.outputs.branch }}
+          RUN_URL: ${{ steps.run.outputs.url }}
+          BUILT_AT: ${{ steps.run.outputs.built_at }}
+        run: |
+          cat > notes.md <<EOF
+          Firmware from [build run]($RUN_URL) on \`$BRANCH\`.
+
+          - Commit: $SHA
+          - Built at: $BUILT_AT
+          EOF
+
+          mapfile -t assets < <(find firmware -type f -name '*.uf2' | sort)
+
+          # re-publishing the same build run must not fail on an existing tag
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "${assets[@]}" --clobber
+          else
+            gh release create "$TAG" \
+              --target "$SHA" \
+              --title "Firmware $TAG" \
+              --notes-file notes.md \
+              --latest=false \
+              "${assets[@]}"
+          fi
+
+      - name: Refresh rolling latest release
+        env:
+          TAG: ${{ steps.run.outputs.tag }}
+          SHA: ${{ steps.run.outputs.sha }}
+          BUILT_AT: ${{ steps.run.outputs.built_at }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          cat > latest-notes.md <<EOF
+          Always points at the newest published build: [$TAG]($REPO_URL/releases/tag/$TAG)
+
+          - Commit: $SHA
+          - Built at: $BUILT_AT
+          EOF
+
+          mapfile -t assets < <(find firmware -type f -name '*.uf2' | sort)
+
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest \
+            --target "$SHA" \
+            --title "Latest firmware" \
+            --notes-file latest-notes.md \
+            --latest \
+            "${assets[@]}"
